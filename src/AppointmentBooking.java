@@ -333,14 +333,14 @@ class AppointmentBooking {
 		System.out.println("enter your age: ");
 		try {
 			patientAge.add(sc.nextInt());
-		} catch (InputMismatchException e) {
+		} catch (Exception e) {
 			System.out.println("Enter valid age..\n");
 			patientRegistration();
 		}
 		System.out.println("Please enter your Mobile number");
 		try {
 			mobileNumber = sc.nextLong();
-		} catch (InputMismatchException e) {
+		} catch (Exception e) {
 			System.out.println("Enter valid phone number..");
 			Thread.sleep(1000);
 			patientRegistration();
@@ -406,7 +406,7 @@ class AppointmentBooking {
 	void doctorRegistration() throws Exception {
 		Scanner sc = new Scanner(System.in);
 		int i = 0;
-		long mobileNumber;
+		long mobileNumber=-1;
 		boolean flag = true, flag1 = true;
 
 		System.out.println("\t\t ----------------------------------");
@@ -418,7 +418,14 @@ class AppointmentBooking {
 		doctorName.add(sc.nextLine());
 
 		System.out.println("Please enter your Mobile number");
-		mobileNumber = (sc.nextLong());
+		try{
+			mobileNumber = (sc.nextLong());
+		}
+		catch(Exception e){
+			System.out.println("Invalid phone number type..enter again");
+			Thread.sleep(1000);
+			doctorRegistration();
+		}
 
 		long mno;
 
@@ -551,11 +558,24 @@ class AppointmentBooking {
 		interfaceClass d1 = new interfaceClass();
 		d1.welcome();
 		System.out.print("Enter your name : ");
-		String l1 = sc.nextLine();
-		d1.sayHi(l1);
+		String l1="";
+		try{
+			l1 = sc.nextLine();
+			for(int i=0;i<l1.length();i++){
+				if(l1.charAt(i)>='0' && l1.charAt(i)<='9'){
+					throw new customException("Enter valid name..");
+				}
+			}
+		}
+		catch(customException e){
+			System.out.println("Exception caught : "+e+"\n");
+			flag=false;
+		}
+		
 
 		
-		while (flag = true) {
+		while (flag == true) {
+			d1.sayHi(l1);
 			System.out.println("\n1. Doctor \t 2. Patient \t 3. Admin \t 4. Exit");
 			int choice = sc.nextInt();
 			switch (choice) {
@@ -575,13 +595,20 @@ class AppointmentBooking {
 
 				case 4:
 					childThread c1 = new childThread();
+					
 					try {
 						c1.join();
+						System.out.println("\n\nonce again .. :) :)\n\n");
+						childThread c2 = new childThread();
+						c2.join();
 					} catch (InterruptedException e) {
 						System.out.println("child thread interuupted");
 					}
 
-					System.out.println("Have a good day(main thread exiting)..");
+					
+
+
+					System.out.println("\nHave a good day(main thread exiting)..");
 					System.exit(0);
 				default:
 					break;

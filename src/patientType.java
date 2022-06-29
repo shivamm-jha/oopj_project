@@ -66,4 +66,18 @@ class EmergencyPatient extends NormalPatient {
         System.out.println("Your Emergency  booking num is : "+ "E"+(int)this.applicationNum());
 
     }
+
+
+    //  method returning an object..
+    
+    patientType m1(patientType p1){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter patient name : ");
+        String name = sc.next();
+        System.out.println("Enter patient age : ");
+        int age = sc.nextInt();
+        p1.patientName=name;
+        p1.PatientAge=age;
+        return p1;
+    }
 }

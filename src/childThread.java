@@ -1,13 +1,15 @@
 package src;
 import java.util.*;
+
 class childThread extends Thread {
+   
     childThread(){
         super("newThread");
         start();
     }
     
     @Override
-    public void run(){
+    public synchronized void run(){
         ArrayList<String> a1= new ArrayList<>();
         a1.add("Thank you for visiting us..\n");
         a1.add("We would love to help you in future :)\n");
